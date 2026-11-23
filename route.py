@@ -8,6 +8,8 @@ Usage:
 Every live request and response is saved in runs/ so any result can be rerun and audited.
 """
 
+from __future__ import annotations
+
 import argparse
 import json
 import os
@@ -46,12 +48,27 @@ def load_config() -> dict:
     return json.loads((HERE / "departments.json").read_text())
 
 
-def build_request(company: dict, departments: dict, ticket: dict) -> dict:
+# Organisation policy: how judgments become priorities and tiers. The defaults are Northwind's rules;
+# a config file can override them under "policy" (see bench/itsm/queues.json).
+DEFAULT_POLICY = {
+    "priority_by_urgency": ["low", "medium", "high", "highest"],  # urgency level 0-3 -> priority
+    "many_blocked_raise_to": "highest",  # when 'many blocked' has >= 0.3 probability
+    "ongoing_loss_unsure_min": "high",  # minimum priority when ongoing_loss is unsettled (None = no bump)
+    "security_min": "high",
+    "first_line": None,  # queue for routine requests a first-line agent can resolve (None = no tier rule)
+}
+
+
+def policy_from(config: dict) -> dict:
+    return {**DEFAULT_POLICY, **{k: v for k, v in config.get("policy", {}).items() if not k.startswith("_")}}
+
+
+def build_request(company: dict, departments: dict, ticket: dict, policy: dict | None = None) -> dict:
     fields = ("title", "description", "reporter_role")
     return {
         "model": Q.MODEL,
         "state": {"company": company, "ticket": {k: ticket[k] for k in fields if ticket.get(k)}},
-        "questions": Q.build_questions(departments),
+        "questions": Q.build_questions(departments, first_line=bool((policy or {}).get("first_line"))),
     }
 
 
@@ -77,8 +94,10 @@ def reading(p: float) -> str:
     return "yes" if p > Q.YES else "no" if p < Q.NO else "unsettled"
 
 
-def decide(answers: dict, departments: dict) -> dict:
-    """The decision table. Each 'trace' line names the row in DESIGN.md that fired."""
+def decide(answers: dict, departments: dict, policy: dict | None = None) -> dict:
+    """The decision table. Each 'trace' line names the rule that fired."""
+    policy = {**DEFAULT_POLICY, **(policy or {})}
+    rank = {p: i for i, p in enumerate(PRIORITIES)}
     noul = lambda name: answers[name]["noul"]
     ranked = sorted(answers["main_department"]["probabilities"].items(), key=lambda kv: kv[1], reverse=True)
     top, top_p = ranked[0]
@@ -105,6 +124,15 @@ def decide(answers: dict, departments: dict) -> dict:
         owner = top
         trace.append(f"Row 4: main inbox {top} ({top_p:.2f})")
 
+    # Row 4b (tier policy): a routine request one first-line agent can resolve goes to first line,
+    # unless it is security work. Topic and tier are separate judgments.
+    first_line = policy["first_line"]
+    if first_line and owner not in (TRIAGE, first_line, "security") and "first_line_can_resolve" in answers:
+        fl_p = noul("first_line_can_resolve")
+        if reading(fl_p) == "yes":
+            trace.append(f"Row 4b: first_line_can_resolve is yes ({fl_p:.2f}), so {first_line} instead of {owner}")
+            owner = first_line
+
     # Row 5: copies to every other team that has work in it.
     copies = [d for d in departments if d != owner and reading(noul(f"needs_{d}")) == "yes"]
     if copies:
@@ -116,13 +144,15 @@ def decide(answers: dict, departments: dict) -> dict:
     # Row 7: priority from the urgency levels. Look at the top level separately so a
     # two-peaked answer (e.g. 'can wait' vs 'breach') is not averaged into 'medium'.
     urgency = answers["urgency"]
-    level = min(round(urgency["score"]), len(PRIORITIES) - 1)
+    u = min(round(urgency["score"]), 3)
+    level = rank[policy["priority_by_urgency"][u]]
     trace.append(f"Row 7: urgency score {urgency['score']:.2f}, so {PRIORITIES[level]}")
-    top_level_p = urgency["probabilities"].get(str(len(PRIORITIES) - 1), 0)
-    if top_level_p >= 0.3 and level < len(PRIORITIES) - 1:
-        level = len(PRIORITIES) - 1
-        reasons.append("possible critical impact")
-        trace.append(f"Row 7: 'many people blocked' at {top_level_p:.2f} (≥ 0.30), so raised to highest")
+    top_level_p = urgency["probabilities"].get("3", 0)
+    raise_to = rank[policy["many_blocked_raise_to"]]
+    if top_level_p >= 0.3 and level < raise_to:
+        level = raise_to
+        reasons.append("possibly many people blocked")
+        trace.append(f"Row 7: 'many people blocked' at {top_level_p:.2f} (≥ 0.30), so raised to {PRIORITIES[level]}")
 
     # Row 7b: harm that grows every hour is highest; unsure is at least high.
     loss_p = noul("ongoing_loss")
@@ -130,15 +160,17 @@ def decide(answers: dict, departments: dict) -> dict:
         level = 3
         reasons.append("ongoing loss")
         trace.append(f"Row 7b: ongoing_loss is yes ({loss_p:.2f}), so highest")
-    elif reading(loss_p) == "unsettled" and level < 2:
-        level = 2
-        trace.append(f"Row 7b: ongoing_loss is unsure ({loss_p:.2f}), so at least high")
+    elif reading(loss_p) == "unsettled" and policy["ongoing_loss_unsure_min"]:
+        floor = rank[policy["ongoing_loss_unsure_min"]]
+        if level < floor:
+            level = floor
+            trace.append(f"Row 7b: ongoing_loss is unsure ({loss_p:.2f}), so at least {PRIORITIES[level]}")
 
     # Row 6: security work raises priority and always copies security.
     if "security" in departments and reading(noul("needs_security")) == "yes":
-        if level < 2:
-            level = 2
-            trace.append("Row 6: security involved, so priority at least high")
+        if policy["security_min"] and level < rank[policy["security_min"]]:
+            level = rank[policy["security_min"]]
+            trace.append(f"Row 6: security involved, so priority at least {PRIORITIES[level]}")
         if owner != "security" and "security" not in copies:
             copies.append("security")
             trace.append("Row 6: copy to security")

@@ -25,8 +25,11 @@ NO = 0.3
 MAIN_INBOX_MIN = 0.6
 
 
-def build_questions(departments: dict[str, str]) -> dict:
-    """Return every question for one ticket. All of them share the ticket as state."""
+def build_questions(departments: dict[str, str], first_line: bool = False) -> dict:
+    """Return every question for one ticket. All of them share the ticket as state.
+
+    first_line adds the tier judgment for organisations whose first-line desk keeps routine requests.
+    """
     questions = {
         # Main inbox: exactly one owner.
         "main_department": {
@@ -104,6 +107,17 @@ def build_questions(departments: dict[str, str]) -> dict:
             "job_candidate": "Someone applying for or asking about a job with us.",
         },
     }
+
+    if first_line:
+        # Tier, not topic: whether this needs a specialist at all.
+        questions["first_line_can_resolve"] = {
+            "type": "noul",
+            "instructions": "Could a first-line service desk agent fully resolve `ticket` by following a standard procedure, without a specialist team?",
+            "criteria": {
+                "true": "A routine request or simple fix for one person, such as forwarding a phone, granting a standard folder, or replacing a faulty accessory.",
+                "false": "It needs a specialist to investigate: a failure with an unknown cause, something affecting many people, a recurring problem, or a change to systems.",
+            },
+        }
 
     # Copies to other inboxes: several teams can be needed, so one Noul per team (speculative fan-out).
     for name, desc in departments.items():

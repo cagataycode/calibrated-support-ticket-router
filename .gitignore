@@ -6,3 +6,7 @@ __pycache__/
 runs/web/
 skill/ticket-router/runs/
 skill/ticket-router.zip
+# lvogel ITSM dataset has no stated licence: keep its text out of git, publish scores only.
+bench/itsm/raw/
+bench/itsm/tickets.jsonl
+bench/itsm/spot_check.md

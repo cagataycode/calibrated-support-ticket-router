@@ -38,14 +38,15 @@ def claude_system(company: dict, departments: dict) -> str:
 
 
 def run_jev(config: dict, t: dict) -> dict:
-    payload = route.build_request(config["company"], config["departments"], t)
+    policy = route.policy_from(config)
+    payload = route.build_request(config["company"], config["departments"], t, policy)
     start = time.perf_counter()
     try:
         resp = route.call_jev(payload)
     except route.JevError as e:
         return {"error": str(e)}
     ms = (time.perf_counter() - start) * 1000
-    decision = route.decide(resp["answers"], config["departments"])
+    decision = route.decide(resp["answers"], config["departments"], policy)
     main = resp["answers"]["main_department"]
     tokens = resp.get("usage", {}).get("input_tokens", 0)
     return {
@@ -107,27 +108,36 @@ def main() -> None:
     ap.add_argument("--teams", choices=["real", "dataset"], default="real",
                     help="real = ../departments.json (scored with score_labels.py); dataset = the dataset's own queues (Benchmark 1)")
     ap.add_argument("--labelled", action="store_true", help="only the 100 tickets on the labelling page")
+    ap.add_argument("--dataset", choices=["support", "itsm"], default="support",
+                    help="support = Tobi-Bueck tickets (bench/data); itsm = lvogel ITSM tickets scored on their own queues (bench/itsm)")
+    ap.add_argument("--sample", type=int, help="random N tickets (fixed seed), for a cheap first run")
     args = ap.parse_args()
 
     route.load_env()
-    if args.teams == "real":
-        config = route.load_config()
+    if args.dataset == "itsm":
+        args.teams = "dataset"
+        config = json.loads((HERE / "itsm" / "queues.json").read_text())
+        tickets_file = HERE / "itsm" / "tickets.jsonl"
     else:
-        config = json.loads((HERE / "dataset_queues.json").read_text())
-    tickets = [json.loads(line) for line in (HERE / "data" / "tickets.jsonl").read_text().splitlines()]
+        config = route.load_config() if args.teams == "real" else json.loads((HERE / "dataset_queues.json").read_text())
+        tickets_file = HERE / "data" / "tickets.jsonl"
+    tickets = [json.loads(line) for line in tickets_file.read_text().splitlines()]
     if args.labelled:
         from labels import sample
         keep = {t["id"] for t in sample()}
         tickets = [t for t in tickets if t["id"] in keep]
     elif args.split != "all":
         tickets = [t for t in tickets if t["split"] == args.split]
+    if args.sample:
+        import random
+        tickets = random.Random(2026).sample(tickets, min(args.sample, len(tickets)))
     if args.limit:
         tickets = tickets[: args.limit]
 
     out = HERE / "results" / time.strftime("%Y%m%d-%H%M%S")
     out.mkdir(parents=True)
     (out / "meta.json").write_text(json.dumps({
-        "split": "labelled" if args.labelled else args.split, "teams": args.teams,
+        "dataset": args.dataset, "split": "labelled" if args.labelled else args.split, "teams": args.teams,
         "n": len(tickets), "claude_model": CLAUDE_MODEL, "jev_model": route.Q.MODEL,
         "thresholds": {"yes": route.Q.YES, "no": route.Q.NO, "main_min": route.Q.MAIN_INBOX_MIN},
     }, indent=2))
@@ -136,7 +146,7 @@ def main() -> None:
     system = claude_system(config["company"], config["departments"])
 
     def one(t: dict) -> dict:
-        row = {"id": t["id"], "label": t["label"], "priority": t.get("priority")}
+        row = {"id": t["id"], "label": t["label"], "priority": t.get("priority"), "type": t.get("type"), "impact": t.get("impact")}
         if args.only != "claude":
             row["jev"] = run_jev(config, t)
         if args.only != "jev":

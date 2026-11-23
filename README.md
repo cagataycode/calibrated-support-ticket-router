@@ -74,6 +74,41 @@ A visual summary is in [report/ticket-router.html](report/ticket-router.html).
 - **Known gaps:** a double charge gets low priority, because urgency measures how many people are blocked, not money owed;
   and Customer Support gets copied on many customer tickets.
 
+## Second benchmark: labels nobody here wrote
+
+To rule out bias from writing our own answer key, Jev and Opus were also scored against the ready-made labels of
+[lvogel/itsm-tickets-synthesized](https://huggingface.co/datasets/lvogel/itsm-tickets-synthesized): 1,805 synthetic
+internal-IT tickets, each with one of 10 queues. The queue descriptions ([bench/itsm/queues.json](bench/itsm/queues.json))
+were written from the queue names before reading any ticket, and both systems got the same ones. The dataset has no stated
+licence, so its text isn't in this repo; only the answers and scores are.
+
+The test set is 200 random tickets (seed 2026). A separate set of 300 dev tickets was the only data used to study and
+change the rules.
+
+| 200 test tickets | Jev + rules | Claude Opus 5.5 |
+|---|---|---|
+| Right queue | **68.5%** | 68.0% |
+| Right queue, excluding L1 Service Desk (173) | **79%** | 78% |
+| Cost per 1,000 tickets | **$0.12** | $6.09 |
+| Median latency | **187 ms** | 1.9 s |
+
+- **The two systems agree on 90% of tickets, and on 51 they give the same "wrong" answer.** Only 15 tickets separate
+  them (8 only Jev got right, 7 only Opus).
+- **L1 Service Desk is a tier, not a topic.** Both systems got almost none of its 27 tickets (Jev 0, Opus 1). The
+  dataset keeps routine requests such as granting a folder, forwarding a phone, or a laptop battery at first line.
+  A text-only router sends them to the specialist team for that topic. A separate tier question ("could a first-line
+  agent resolve this with a standard procedure?") was tried on dev and **switched off**: it recovered 9 of 34 L1
+  tickets but pulled 17 others into L1. The option stays in the code (`policy.first_line`).
+- **Calibration is weaker here than on hand labels:** 0.99 → 81% right, 0.88 → 61%. Part of that is the queue-policy
+  disagreement above.
+- **Priority policy is per organisation.** The default rules treat "one person can't work" as high and bump unsure
+  cases upward. They matched the dataset's priority on only 21.5% of tickets. The dataset follows "one user =
+  medium, many = high". Writing that down as this organisation's policy (`policy` in `queues.json`; no wording changes)
+  raised agreement to **54% on dev and 53.5% on test**. Routing is unchanged.
+
+Reproduce: download the raw file (see [bench/itsm/prepare.py](bench/itsm/prepare.py)), run `python3 bench/itsm/prepare.py`,
+then `bench/bench.py --dataset itsm` (test split) and `bench/itsm/rescore.py <run>` to re-apply the rules offline.
+
 ## Run it
 
 Python 3.9+. The router and demo use only the standard library.

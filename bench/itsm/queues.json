@@ -1,0 +1,44 @@
+{
+  "_note": "Queues of the lvogel/itsm-tickets-synthesized dataset. Descriptions were written from the queue names and common ITSM practice, before reading any ticket, so they are not tuned to the tickets. Jev and Claude get the same descriptions; the dataset's queue label is the answer key.",
+  "company": {
+    "name": "Contoso",
+    "description": "A mid-sized company whose internal IT department runs a service desk. Employees file tickets about their devices, accounts, network, business applications and cloud services."
+  },
+  "labels": {
+    "security": "Security / SOC",
+    "identity_access": "Identity & Access Management",
+    "service_desk_l1": "L1 Service Desk",
+    "network_l2": "L2 Network",
+    "desktop_support_l2": "L2 Desktop Support",
+    "server_infrastructure_l3": "L3 Server / Infrastructure",
+    "database_l3": "L3 Database / DBA",
+    "applications_engineering": "Applications / Software Engineering",
+    "cloud_devops": "Cloud / DevOps",
+    "vendor_support": "Vendor / Third-Party Support"
+  },
+  "departments": {
+    "security": "Security operations: phishing, malware, suspicious sign-ins, compromised accounts, data leaks and other security incidents, plus security reviews and hardening requests.",
+    "identity_access": "Accounts and permissions: creating, disabling or unlocking accounts, password and MFA resets, single sign-on, group memberships, and requests for access to systems, folders or applications.",
+    "service_desk_l1": "First-line service desk: simple how-to questions, standard requests and quick fixes that need no specialist, such as setting up a mailbox rule, ordering standard equipment, or general questions about IT services.",
+    "network_l2": "Network specialists: Wi-Fi, wired network, VPN, firewalls, DNS, switches, internet connectivity and office network outages.",
+    "desktop_support_l2": "Desktop and device specialists: laptops, desktops, printers, monitors, docking stations, phones and peripherals, and installing or repairing software on an employee's own device.",
+    "server_infrastructure_l3": "Server and infrastructure engineers: on-premises servers, virtual machines, storage, backups, file servers and data-centre hardware.",
+    "database_l3": "Database administrators: database outages, slow queries, replication, backups and restores of databases, schema changes and database access tuning.",
+    "applications_engineering": "Business applications and in-house software: bugs, errors and change requests in the company's applications, integrations between them, and application releases.",
+    "cloud_devops": "Cloud platform and DevOps: cloud accounts and resources, containers, CI/CD pipelines, deployments, infrastructure as code and cloud cost or capacity.",
+    "vendor_support": "Problems that must be handled by an outside supplier: vendor-managed systems, warranty repairs, licence renewals with a vendor, and escalations to a third party's support."
+  },
+  "policy": {
+    "_note": "This organisation's policy, studied on the 300 dev tickets only: priority follows how many people are affected (one user = medium, many = high), with no automatic bumps. A first-line tier rule (first_line = service_desk_l1) was tried on dev and switched off: it recovered 9 of 34 L1 tickets but pulled 17 others into L1.",
+    "priority_by_urgency": [
+      "low",
+      "medium",
+      "medium",
+      "high"
+    ],
+    "many_blocked_raise_to": "high",
+    "ongoing_loss_unsure_min": null,
+    "security_min": null,
+    "first_line": null
+  }
+}

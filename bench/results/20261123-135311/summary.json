@@ -1,0 +1,22 @@
+{
+  "run": "20261123-135311",
+  "dataset": "itsm",
+  "split": "dev",
+  "teams": "dataset",
+  "n": 300,
+  "claude_model": "claude-opus-5-5",
+  "jev_model": "jev-latest",
+  "thresholds": {
+    "yes": 0.7,
+    "no": 0.3,
+    "main_min": 0.6
+  },
+  "jev": {
+    "top1": 215,
+    "n": 300,
+    "routed": 265,
+    "routed_ok": 198,
+    "cost": 0.03575157600000001,
+    "median_ms": 185.07966698962264
+  }
+}
