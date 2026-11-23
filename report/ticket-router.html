@@ -1,0 +1,273 @@
+<title>Jev Ticket Router</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one reading column, with a few wide figures (flow, results, calibration) that break into a grid. */
+  :root {
+    --bg: #f5f6f4;
+    --surface: #ffffff;
+    --ink: #1c2321;
+    --muted: #5d6763;
+    --line: #dde2df;
+    --accent: #0f766e;
+    --accent-soft: #dcefeb;
+    --jev: #0f766e;
+    --claude: #a15c2f;
+    --claude-soft: #f4e6dc;
+    --warn: #9a6a00;
+    --warn-soft: #f8edd2;
+    --display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #131817; --surface: #1b2220; --ink: #e7ecea; --muted: #9aa6a1; --line: #2c3532;
+      --accent: #4fc2b4; --accent-soft: #173a35; --jev: #4fc2b4;
+      --claude: #e0a07a; --claude-soft: #3d2a1f; --warn: #e5b85c; --warn-soft: #3a3020;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #131817; --surface: #1b2220; --ink: #e7ecea; --muted: #9aa6a1; --line: #2c3532;
+    --accent: #4fc2b4; --accent-soft: #173a35; --jev: #4fc2b4;
+    --claude: #e0a07a; --claude-soft: #3d2a1f; --warn: #e5b85c; --warn-soft: #3a3020;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink); font: 16px/1.6 var(--body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  main { max-width: 860px; margin: 0 auto; padding-block: 40px 64px; display: grid; gap: 48px; }
+  section { display: grid; gap: 14px; min-width: 0; }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.2; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(30px, 5vw, 42px); font-weight: 700; letter-spacing: -0.01em; }
+  h2 { font-size: 24px; font-weight: 600; }
+  h3 { font-size: 17px; font-weight: 600; }
+  p { margin: 0; max-width: 66ch; }
+  .eyebrow { font: 500 12px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  .lede { font-size: 18px; color: var(--muted); }
+  .muted { color: var(--muted); }
+  .small { font-size: 14px; }
+
+  /* Flow */
+  .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .step { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 6px; align-content: start; }
+  .step .n { font: 500 12px/1 var(--mono); color: var(--accent); }
+  .step b { font-family: var(--display); font-weight: 600; font-size: 16px; }
+  .step span { font-size: 14px; color: var(--muted); }
+
+  /* Example ticket */
+  .ticket { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .ticket .head { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--line); font: 13px/1.4 var(--mono); color: var(--muted); }
+  .ticket .body { padding: 14px 16px; display: grid; gap: 4px; }
+  .ticket .route { padding: 12px 16px; background: var(--accent-soft); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 14px; }
+  .chip { display: inline-block; font: 500 12.5px/1.6 var(--mono); padding: 1px 8px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+  .chip.hi { border-color: var(--accent); color: var(--accent); }
+
+  /* Results */
+  .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 4px; }
+  .stat .k { font-size: 13px; color: var(--muted); }
+  .stat .v { font: 600 26px/1.1 var(--display); font-variant-numeric: tabular-nums; }
+  .stat .vs { font-size: 13px; color: var(--muted); }
+  .stat .vs b { color: var(--claude); font-weight: 600; }
+
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  th { font: 500 12px/1.3 var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .jevc { color: var(--jev); font-weight: 600; }
+  .clc { color: var(--claude); font-weight: 600; }
+
+  /* Calibration */
+  .calib { display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+  .crow { display: grid; grid-template-columns: 92px minmax(0, 1fr) 70px; gap: 12px; align-items: center; font-size: 14px; }
+  .crow .lbl { font: 13px var(--mono); color: var(--muted); }
+  .bars { display: grid; gap: 3px; }
+  .bar { height: 9px; border-radius: 5px; background: var(--line); position: relative; overflow: hidden; }
+  .bar i { position: absolute; inset: 0 auto 0 0; border-radius: 5px; }
+  .bar.say i { background: var(--muted); opacity: 0.55; }
+  .bar.got i { background: var(--jev); }
+  .crow .val { font: 13px var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); }
+  .legend span::before { content: ""; display: inline-block; width: 12px; height: 8px; border-radius: 4px; margin-right: 6px; vertical-align: middle; }
+  .legend .s::before { background: var(--muted); opacity: 0.55; }
+  .legend .g::before { background: var(--jev); }
+
+  /* Questions */
+  .qs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .q { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; }
+  .q .t { font: 500 12px/1 var(--mono); color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+  .q p { font-size: 15px; }
+  .q .why { font-size: 13.5px; color: var(--muted); }
+
+  .callout { background: var(--warn-soft); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; }
+  .callout h3 { color: var(--warn); }
+  ul.plain { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 66ch; }
+
+  details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+  summary { cursor: pointer; padding: 12px 16px; font-weight: 500; }
+  summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 10px; }
+  pre { margin: 0; padding: 0 16px 16px; white-space: pre-wrap; overflow-wrap: anywhere; font: 13px/1.55 var(--mono); color: var(--ink); }
+
+  footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+
+  @media (max-width: 720px) {
+    .flow, .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .qs { grid-template-columns: 1fr; }
+    .crow { grid-template-columns: 74px minmax(0, 1fr) 62px; }
+  }
+</style>
+
+<main>
+  <header style="display:grid; gap:12px">
+    <div class="eyebrow">Calibrated support ticket router</div>
+    <h1>Jev Ticket Router</h1>
+    <p class="lede">Whoever files a ticket shouldn't have to pick the right team. They just describe the problem. An AI model reads
+      the ticket, and simple, visible rules send it to the right department's inbox. When the AI isn't sure, a person
+      decides.</p>
+  </header>
+
+  <section aria-labelledby="how">
+    <h2 id="how">How it works</h2>
+    <div class="flow">
+      <div class="step"><span class="n">1</span><b>Someone writes a ticket</b><span>Title and description. No category to choose.</span></div>
+      <div class="step"><span class="n">2</span><b>Jev answers small questions</b><span>18 quick yes/no and multiple-choice questions, all at once, in about 0.2 seconds.</span></div>
+      <div class="step"><span class="n">3</span><b>Rules decide</b><span>Plain rules turn the answers into an inbox, copies to other teams, a priority and labels.</span></div>
+      <div class="step"><span class="n">4</span><b>Inbox or a person</b><span>Clear cases are routed. Unsure cases go to a triage inbox for a person to decide.</span></div>
+    </div>
+    <p class="muted small"><b>Jev</b> is an AI model from TypeSafe. Unlike a chatbot, it doesn't write text. It answers typed questions
+      with a probability, such as "billing: 94% likely". That probability is what lets the rules tell sure cases from unsure ones.</p>
+
+    <div class="ticket" aria-label="Example ticket">
+      <div class="head"><span>Example ticket</span><span>from: engineer</span></div>
+      <div class="body">
+        <h3>API key leaked in public repo</h3>
+        <p class="small">One of our engineers pushed a production database key to a public GitHub repo an hour ago. The repo is still public.</p>
+      </div>
+      <div class="route"><span>Routed to</span><span class="chip hi">Security</span><span>copy</span><span class="chip">Engineering</span><span>priority</span><span class="chip hi">highest</span><span class="muted small">because "money or data being lost right now" = 94%</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="results">
+    <h2 id="results">Results</h2>
+    <p>We tested on 100 support tickets from a public dataset. We hand-labelled the correct team for each one, and we
+      compared Jev with Claude Opus 5.5, a leading general-purpose AI model, given the same list of teams.</p>
+    <div class="stats">
+      <div class="stat"><span class="k">Right team</span><span class="v">85%</span><span class="vs">Claude: <b>81%</b></span></div>
+      <div class="stat"><span class="k">Cost per 1,000 tickets</span><span class="v">$0.11</span><span class="vs">Claude: <b>$5.40</b></span></div>
+      <div class="stat"><span class="k">Time per ticket</span><span class="v">0.19 s</span><span class="vs">Claude: <b>1.9 s</b></span></div>
+      <div class="stat"><span class="k">Routed with no person</span><span class="v">90%</span><span class="vs">90% of those correct</span></div>
+    </div>
+    <p class="muted small">Accuracy is measured on 96 tickets. The other 4 were marked unclear. The gap between Jev and Claude is 4 tickets,
+      so the fair reading is "at least as accurate as Claude, about 49 times cheaper and 10 times faster".</p>
+
+    <h3>Can you trust Jev's confidence?</h3>
+    <p class="small">Yes. When Jev says it's 98% sure, it's right 97% of the time. This is what makes the triage inbox work: low
+      confidence really does mean "check this".</p>
+    <div class="calib" role="img" aria-label="Jev's stated confidence compared with how often it was right">
+      <div class="crow"><span class="lbl">very sure</span><div class="bars"><div class="bar say"><i style="width:98%"></i></div><div class="bar got"><i style="width:97%"></i></div></div><span class="val">98 → 97%</span></div>
+      <div class="crow"><span class="lbl">sure</span><div class="bars"><div class="bar say"><i style="width:88%"></i></div><div class="bar got"><i style="width:85%"></i></div></div><span class="val">88 → 85%</span></div>
+      <div class="crow"><span class="lbl">fairly sure</span><div class="bars"><div class="bar say"><i style="width:69%"></i></div><div class="bar got"><i style="width:71%"></i></div></div><span class="val">69 → 71%</span></div>
+      <div class="crow"><span class="lbl">unsure</span><div class="bars"><div class="bar say"><i style="width:51%"></i></div><div class="bar got"><i style="width:67%"></i></div></div><span class="val">51 → 67%</span></div>
+      <div class="legend"><span class="s">what Jev said</span><span class="g">how often it was right</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="learned">
+    <h2 id="learned">What we learned</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Finding</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td>The public dataset's own labels were mostly wrong</td><td>Against them, both models scored under 30%. Where Jev and Claude agreed with each other, the label matched only 34% of the time. One example: a projector problem filed under HR.</td></tr>
+          <tr><td>The dataset's 10 "departments" overlapped</td><td>They mixed three questions: which team owns it, what kind of request it is, and who is asking. Real helpdesks keep these separate.</td></tr>
+          <tr><td>Real-world teams made routing far clearer</td><td>After switching to 10 real teams, Jev and Claude agreed on <span class="jevc">86%</span> of tickets, up from 58%. Tickets routed without a person rose from 68% to <span class="jevc">90%</span>.</td></tr>
+          <tr><td>Most mistakes sit on real team boundaries</td><td>How-to questions about security, whether the writer runs the servers or only uses them, and billing versus sales. These were the same tickets that were hard for a person to label.</td></tr>
+          <tr><td>Splitting "urgency" in two fixed odd priorities</td><td>"How many people are blocked" and "is money or data being lost right now" are separate questions. A broken office heater no longer ranks with a data leak for the wrong reason.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="questions">
+    <h2 id="questions">What Jev is asked</h2>
+    <p>Jev never answers "where should this go?" directly. It answers small questions a person could answer at a glance,
+      and the rules make the decision. That keeps the decision visible and easy to change.</p>
+    <div class="qs">
+      <div class="q"><span class="t">Choice</span><p>Which team should own this ticket?</p><span class="why">Picks the main inbox from the 10 teams.</span></div>
+      <div class="q"><span class="t">Yes / no</span><p>Does this ticket fit any team at all?</p><span class="why">Catches tickets like "lunch recommendations?".</span></div>
+      <div class="q"><span class="t">Yes / no, one per team</span><p>Does this ticket need some work from this team?</p><span class="why">Adds copies, e.g. a GDPR request goes to Legal with a copy to Engineering.</span></div>
+      <div class="q"><span class="t">Scale of 4</span><p>How many people does the problem stop from working?</p><span class="why">Sets the priority.</span></div>
+      <div class="q"><span class="t">Yes / no</span><p>Is money or data being lost right now?</p><span class="why">Raises priority to highest.</span></div>
+      <div class="q"><span class="t">Yes / no</span><p>Is this about someone's own pay, health, contract, or a complaint about a colleague?</p><span class="why">Restricts who can see it and blocks copies.</span></div>
+      <div class="q"><span class="t">Yes / no</span><p>Does it say enough to start work without asking a question first?</p><span class="why">Adds a "needs info" label.</span></div>
+      <div class="q"><span class="t">Choice</span><p>What kind of request is it, and who wrote it?</p><span class="why">Fills two ticket fields: problem, question, change or service request; customer, employee or candidate.</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="rules">
+    <h2 id="rules">The rules</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>If…</th><th>Then…</th></tr></thead>
+        <tbody>
+          <tr><td>No team fits, or Jev is unsure which team owns it (below 60%)</td><td>Send to <b>triage</b>, with the top two suggestions for the person</td></tr>
+          <tr><td>Otherwise</td><td>Send to the <b>top team</b></td></tr>
+          <tr><td>Another team clearly has work in it (above 70%)</td><td>Send that team a <b>copy</b></td></tr>
+          <tr><td>Security is involved</td><td>Priority at least <b>high</b>, copy to Security</td></tr>
+          <tr><td>Money or data is being lost right now</td><td>Priority <b>highest</b></td></tr>
+          <tr><td>It might be a confidential personal matter</td><td>Mark <b>restricted</b>, no copies</td></tr>
+          <tr><td>The AI service fails</td><td>Treat it as an error and send to <b>triage</b>, never as a "no"</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted small">"Yes" means above 70%, "no" means below 30%, and anything in between counts as unsure.</p>
+  </section>
+
+  <section aria-labelledby="prompt">
+    <h2 id="prompt">The prompt used for Claude</h2>
+    <p>For a fair comparison, Claude got the same company description and team list that Jev uses, and had to pick exactly one team.</p>
+    <details>
+      <summary>Show the full prompt</summary>
+<pre>You route support tickets for Northwind: A technology company that sells cloud software (project management, data analytics, marketing tools) and related IT services to business customers. Customers email the helpdesk, and employees use the same ticket system for internal requests.
+Pick the one department that should own the ticket.
+
+Departments:
+- customer_support: First-line help for customers when nothing is broken: how-to questions, how to set up or integrate a product, requests for documentation, account questions, help getting better results, and general questions about the company.
+- engineering: The product team: bugs, crashes, errors, wrong results, slow performance and failing integrations in our products as a user experiences them, plus requests for new features or changes to a product.
+- operations: The team that runs our servers and services: outages, service interruptions, planned maintenance, and server capacity or overload. Also problems reported by someone who operates the system (restarted servers, checked logs, tuned databases) rather than someone who only uses it.
+- security: Data breaches, leaks, unauthorized access, phishing and malware, and requests to strengthen security, encryption or data protection.
+- billing: Invoices, charges, payments, refunds, subscriptions, and questions about payment options or fees for something already bought.
+- sales: People who want to buy something new: questions about what we offer, quotes, demos, upgrades to a bigger plan, and requests for new paid services or projects.
+- internal_it: Our own employees' laptops, accounts, passwords, VPN, email and office network. Not problems in the products customers use.
+- hr: Employees and job candidates: pay, expenses, leave, contracts, workplace policies, training programmes, hiring, and complaints about a colleague.
+- legal: Contracts and terms, data-protection (GDPR) requests from customers, NDAs, and legal threats.
+- facilities: The office building: heating, desks, cleaning, keys and access cards, meeting rooms, and deliveries.
+
+[Then the ticket: "Subject: …" and the body. The answer must be one team name.]</pre>
+    </details>
+  </section>
+
+  <section aria-labelledby="limits">
+    <div class="callout">
+      <h3 id="limits">Limits to keep in mind</h3>
+      <ul class="plain small">
+        <li><b>The answer key leans toward Claude.</b> The labels were reviewed from Claude's suggestions (94 of 100 accepted). Jev still scored higher, and on the 6 tickets where the labeller disagreed with Claude, Jev got 4 right and Claude 2.</li>
+        <li><b>Small, synthetic sample.</b> 96 scored tickets from a generated dataset. Real company tickets are needed before trusting the numbers.</li>
+        <li><b>The team descriptions were written after reading these tickets</b>, which may flatter both models.</li>
+        <li><b>Vague tickets slip through.</b> All 4 tickets the labeller marked "unclear" were routed automatically instead of going to a person. Fix planned: treat "unsure if there's enough detail" as "needs info".</li>
+        <li><b>Data leaves the company.</b> Jev runs only on TypeSafe's servers, so tickets with personal details are sent outside. Real use needs a data agreement and removal of personal data first.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>Built and measured in November 2026. Jev 1.14 (TypeSafe) and Claude Opus 5.5 (Anthropic). Dataset: "Customer Support Tickets" on Hugging Face (CC BY-NC 4.0, synthetic).</footer>
+</main>

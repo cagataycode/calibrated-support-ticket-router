@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ticket Router</title>
+<style>
+  :root {
+    --bg: #f6f6f4; --surface: #ffffff; --surface-2: #f0efec; --border: #dddbd5;
+    --text: #1d1c1a; --muted: #6b6862; --accent: #2f5bd3; --accent-text: #ffffff;
+    --yes: #1f7a4d; --no: #9a9690; --mid: #b26b00; --bar: #2f5bd3; --bar-bg: #e6e5e0;
+    --p-low: #e8ebe6; --p-medium: #e6ecf7; --p-high: #fbead3; --p-highest: #f8d7d3;
+    --p-low-t: #44523f; --p-medium-t: #2b4579; --p-high-t: #7a4a00; --p-highest-t: #8a2219;
+    --flash: #fff4c2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161614; --surface: #201f1d; --surface-2: #2a2926; --border: #3a3935;
+      --text: #ecebe7; --muted: #a09d96; --accent: #7b9cff; --accent-text: #10131c;
+      --yes: #5cc28e; --no: #7d7a74; --mid: #e3a447; --bar: #7b9cff; --bar-bg: #34332f;
+      --p-low: #2b3128; --p-medium: #22304a; --p-high: #43311a; --p-highest: #4a2320;
+      --p-low-t: #b9c7b2; --p-medium-t: #b4c8f2; --p-high-t: #f0c98a; --p-highest-t: #f3b1a9;
+      --flash: #4a4220;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #161614; --surface: #201f1d; --surface-2: #2a2926; --border: #3a3935;
+    --text: #ecebe7; --muted: #a09d96; --accent: #7b9cff; --accent-text: #10131c;
+    --yes: #5cc28e; --no: #7d7a74; --mid: #e3a447; --bar: #7b9cff; --bar-bg: #34332f;
+    --p-low: #2b3128; --p-medium: #22304a; --p-high: #43311a; --p-highest: #4a2320;
+    --p-low-t: #b9c7b2; --p-medium-t: #b4c8f2; --p-high-t: #f0c98a; --p-highest-t: #f3b1a9;
+    --flash: #4a4220;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  header { padding: 20px 24px 8px; }
+  header h1 { margin: 0; font-size: 20px; }
+  header p { margin: 4px 0 0; color: var(--muted); max-width: 70ch; }
+  main {
+    display: grid; grid-template-columns: 340px 1fr; gap: 20px;
+    padding: 16px 24px 32px; align-items: start;
+  }
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  form label { display: block; font-weight: 600; margin: 12px 0 4px; }
+  form label:first-of-type { margin-top: 0; }
+  input, textarea, select {
+    width: 100%; font: inherit; color: var(--text); background: var(--bg);
+    border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px;
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  button {
+    font: inherit; border-radius: 6px; padding: 9px 14px; cursor: pointer;
+    border: 1px solid var(--border); background: var(--surface-2); color: var(--text);
+  }
+  button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
+  button:disabled { opacity: .6; cursor: wait; }
+  .row { display: flex; gap: 8px; margin-top: 14px; }
+  .row button.primary { flex: 1; }
+  .note { color: var(--muted); font-size: 12px; margin-top: 10px; }
+  .error { color: var(--p-highest-t); background: var(--p-highest); border-radius: 6px; padding: 8px 10px; margin-top: 10px; display: none; }
+  .board { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .inbox { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px; min-height: 110px; }
+  .inbox.triage { border-style: dashed; }
+  .inbox h2 { font-size: 13px; margin: 0 0 2px; display: flex; justify-content: space-between; }
+  .inbox h2 .count { color: var(--muted); font-weight: 400; }
+  .inbox .desc { color: var(--muted); font-size: 11.5px; margin: 0 0 8px; }
+  .card {
+    display: block; width: 100%; text-align: left; margin-top: 6px; padding: 8px;
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 7px;
+  }
+  .card.copy { background: transparent; border-style: dashed; }
+  .card.flash { animation: flash 1.6s ease-out; }
+  @keyframes flash { from { background: var(--flash); } }
+  .card .t { font-weight: 600; display: block; margin-bottom: 4px; overflow-wrap: anywhere; }
+  .chips { display: flex; flex-wrap: wrap; gap: 4px; }
+  .chip { font-size: 11px; padding: 1px 7px; border-radius: 999px; background: var(--bar-bg); color: var(--text); }
+  .chip.low { background: var(--p-low); color: var(--p-low-t); }
+  .chip.medium { background: var(--p-medium); color: var(--p-medium-t); }
+  .chip.high { background: var(--p-high); color: var(--p-high-t); }
+  .chip.highest { background: var(--p-highest); color: var(--p-highest-t); }
+  dialog {
+    width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 48px); padding: 0;
+    border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text);
+  }
+  dialog::backdrop { background: rgb(0 0 0 / .35); }
+  .dlg-head { display: flex; justify-content: space-between; gap: 12px; padding: 16px 18px 0; }
+  .dlg-head h3 { margin: 0; font-size: 17px; overflow-wrap: anywhere; }
+  .dlg-body { padding: 4px 18px 18px; }
+  .dlg-body h4 { margin: 18px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  .quote { background: var(--surface-2); border-radius: 6px; padding: 8px 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .trace { margin: 0; padding-left: 18px; }
+  .trace li { margin: 2px 0; }
+  .bars { display: grid; grid-template-columns: minmax(90px, 160px) 1fr 44px; gap: 4px 10px; align-items: center; }
+  .bars .name { overflow-wrap: anywhere; }
+  .bars .track { height: 8px; background: var(--bar-bg); border-radius: 4px; overflow: hidden; }
+  .bars .fill { height: 100%; background: var(--bar); }
+  .bars .fill.yes { background: var(--yes); } .bars .fill.no { background: var(--no); } .bars .fill.unsettled { background: var(--mid); }
+  .bars .val { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+  .legend { color: var(--muted); font-size: 12px; margin-top: 6px; }
+  .meta { color: var(--muted); font-size: 12px; margin-top: 16px; }
+  @media (max-width: 760px) {
+    header { padding: 16px 16px 4px; }
+    main { grid-template-columns: 1fr; padding: 12px 16px 24px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Ticket Router</h1>
+  <p id="sub">Write a ticket. Jev answers 13 questions about it, and plain rules send it to the right inbox. Click any ticket to see why.</p>
+</header>
+<main>
+  <section class="panel">
+    <form id="form">
+      <label for="example">Start from an example</label>
+      <select id="example"><option value="">Write your own…</option></select>
+      <label for="title">Title</label>
+      <input id="title" maxlength="200" placeholder="e.g. Can't log in to the VPN">
+      <label for="description">Description</label>
+      <textarea id="description" maxlength="4000" placeholder="What happened, where, and who is affected?"></textarea>
+      <label for="role">Reporter</label>
+      <input id="role" maxlength="80" value="employee" list="roles">
+      <datalist id="roles"><option value="employee"><option value="customer"><option value="support agent"><option value="engineer"><option value="account manager"></datalist>
+      <div class="row">
+        <button type="submit" class="primary" id="send">Send ticket</button>
+        <button type="button" id="clear">Clear</button>
+      </div>
+      <div class="error" id="error" role="alert"></div>
+      <p class="note">Tickets are sent to TypeSafe's servers. Don't enter real personal data. Inboxes empty when the server restarts.</p>
+    </form>
+  </section>
+  <section class="board" id="board" aria-live="polite"></section>
+</main>
+
+<dialog id="detail">
+  <div class="dlg-head"><h3 id="d-title"></h3><button id="d-close" aria-label="Close">✕</button></div>
+  <div class="dlg-body" id="d-body"></div>
+</dialog>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const pretty = (name) => name.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()).replace(/\bIt\b/, "IT").replace(/^Hr$/, "HR");
+const YES = 0.7, NO = 0.3;
+const reading = (p) => p > YES ? "yes" : p < NO ? "no" : "unsettled";
+let config, tickets = [], lastId = null;
+
+async function init() {
+  config = await (await fetch("/api/config")).json();
+  $("sub").textContent = `${config.company.name}: ${config.company.description} Write a ticket. Jev answers questions about it, and plain rules send it to the right inbox. Click any ticket to see why.`;
+  config.examples.forEach((ex, i) => $("example").append(new Option(ex.title, i)));
+  tickets = await (await fetch("/api/tickets")).json();
+  render();
+}
+
+function render() {
+  const board = $("board"); board.replaceChildren();
+  const names = [...Object.keys(config.departments), config.triage];
+  for (const name of names) {
+    const own = tickets.filter((t) => t.route.inbox === name);
+    const cc = tickets.filter((t) => t.route.copies.includes(name));
+    const box = el("div", "inbox" + (name === config.triage ? " triage" : ""));
+    const h = el("h2", null, name === config.triage ? "Triage (a person decides)" : pretty(name));
+    h.append(el("span", "count", String(own.length + cc.length)));
+    box.append(h, el("p", "desc", name === config.triage ? "Tickets the rules could not settle." : config.departments[name].split(".")[0] + "."));
+    [...own.map((t) => [t, false]), ...cc.map((t) => [t, true])]
+      .sort((a, b) => b[0].id - a[0].id)
+      .forEach(([t, isCopy]) => box.append(card(t, isCopy)));
+    board.append(box);
+  }
+}
+
+function card(t, isCopy) {
+  const c = el("button", "card" + (isCopy ? " copy" : "") + (t.id === lastId ? " flash" : ""));
+  c.type = "button";
+  c.append(el("span", "t", t.ticket.title || t.ticket.description.slice(0, 60)));
+  const chips = el("div", "chips");
+  chips.append(el("span", "chip " + t.route.priority, t.route.priority));
+  if (isCopy) chips.append(el("span", "chip", "copy from " + pretty(t.route.inbox)));
+  t.route.labels.forEach((l) => chips.append(el("span", "chip", l)));
+  c.append(chips);
+  c.addEventListener("click", () => openDetail(t));
+  return c;
+}
+
+function bars(rows) {
+  const g = el("div", "bars");
+  for (const [name, p, kind] of rows) {
+    const track = el("div", "track"), fill = el("div", "fill " + (kind || ""));
+    fill.style.width = Math.round(p * 100) + "%"; track.append(fill);
+    g.append(el("span", "name", name), track, el("span", "val", p.toFixed(2)));
+  }
+  return g;
+}
+
+function openDetail(t) {
+  const a = t.answers, r = t.route, body = $("d-body");
+  $("d-title").textContent = t.ticket.title || "(no title)";
+  body.replaceChildren();
+  body.append(el("div", "quote", (t.ticket.description || "(no description)") + (t.ticket.reporter_role ? `\n— ${t.ticket.reporter_role}` : "")));
+
+  body.append(el("h4", null, "Result"));
+  const chips = el("div", "chips");
+  chips.append(el("span", "chip", "inbox: " + pretty(r.inbox)), el("span", "chip " + r.priority, r.priority));
+  r.copies.forEach((c) => chips.append(el("span", "chip", "copy: " + pretty(c))));
+  r.labels.forEach((l) => chips.append(el("span", "chip", l)));
+  Object.entries(r.fields || {}).forEach(([k, v]) => chips.append(el("span", "chip", `${k.replace("_", " ")}: ${v ? v.replace("_", " ") : "unsure"}`)));
+  body.append(chips);
+
+  body.append(el("h4", null, "Rules that fired"));
+  const ol = el("ol", "trace"); r.trace.forEach((line) => ol.append(el("li", null, line))); body.append(ol);
+
+  body.append(el("h4", null, "Which team should own it? (Choice)"));
+  body.append(bars(Object.entries(a.main_department.probabilities).sort((x, y) => y[1] - x[1]).slice(0, 4).map(([k, p]) => [pretty(k), p])));
+
+  body.append(el("h4", null, "Does it need work from… (one yes/no per team)"));
+  body.append(bars(Object.keys(config.departments).map((d) => [pretty(d), a["needs_" + d].noul, reading(a["needs_" + d].noul)]).sort((x, y) => y[1] - x[1])));
+
+  body.append(el("h4", null, "Other questions"));
+  body.append(bars([
+    ["Fits a department", a.fits_a_department.noul, reading(a.fits_a_department.noul)],
+    ["Enough detail", a.has_enough_detail.noul, reading(a.has_enough_detail.noul)],
+    ["Confidential", a.is_confidential_personal_matter.noul, reading(a.is_confidential_personal_matter.noul)],
+    ["Ongoing loss", a.ongoing_loss.noul, reading(a.ongoing_loss.noul)],
+  ]));
+  body.append(el("p", "legend", `Green = yes (above ${YES}), grey = no (below ${NO}), amber = unsure (goes to a person or the safe default).`));
+
+  body.append(el("h4", null, `Urgency (Score: ${a.urgency.score.toFixed(2)})`));
+  const levels = ["Can wait", "One person slowed", "One person blocked", "Many blocked"];
+  body.append(bars(levels.map((name, i) => [name, a.urgency.probabilities[String(i)] || 0])));
+
+  body.append(el("p", "meta", `${t.model} · ${t.usage?.input_tokens ?? "?"} input tokens · ${t.ms} ms round trip`));
+  $("detail").showModal();
+}
+
+$("example").addEventListener("change", (e) => {
+  const ex = config.examples[e.target.value]; if (!ex) return;
+  $("title").value = ex.title; $("description").value = ex.description; $("role").value = ex.reporter_role;
+});
+$("clear").addEventListener("click", () => { $("form").reset(); $("error").style.display = "none"; });
+$("d-close").addEventListener("click", () => $("detail").close());
+$("detail").addEventListener("click", (e) => { if (e.target === $("detail")) $("detail").close(); });
+
+$("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const send = $("send"), err = $("error");
+  err.style.display = "none"; send.disabled = true; send.textContent = "Asking Jev…";
+  try {
+    const res = await fetch("/api/route", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title: $("title").value, description: $("description").value, reporter_role: $("role").value }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || res.statusText);
+    tickets.push(data); lastId = data.id; render();
+  } catch (x) {
+    err.textContent = "Not routed: " + x.message; err.style.display = "block";
+  } finally {
+    send.disabled = false; send.textContent = "Send ticket";
+  }
+});
+
+init().catch((x) => { $("error").textContent = "Could not load: " + x.message; $("error").style.display = "block"; });
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "_note": "The public dataset's own queues (Tobi-Bueck/customer-support-tickets), used only to draw a balanced sample and for Benchmark 1. Routing and labelling now use the real-world teams in ../departments.json.",
+  "company": {
+    "name": "Helpdesk",
+    "description": "The customer support helpdesk of a technology company. Tickets are emails sent in by customers."
+  },
+  "labels": {
+    "technical_support": "Technical Support",
+    "customer_service": "Customer Service",
+    "billing_and_payments": "Billing and Payments",
+    "product_support": "Product Support",
+    "it_support": "IT Support",
+    "returns_and_exchanges": "Returns and Exchanges",
+    "sales_and_pre_sales": "Sales and Pre-Sales",
+    "human_resources": "Human Resources",
+    "service_outages_and_maintenance": "Service Outages and Maintenance",
+    "general_inquiry": "General Inquiry"
+  },
+  "departments": {
+    "technical_support": "Technical issues and support requests.",
+    "customer_service": "Customer inquiries and service requests.",
+    "billing_and_payments": "Billing issues and payment processing.",
+    "product_support": "Support for product-related issues.",
+    "it_support": "Internal IT support and infrastructure issues.",
+    "returns_and_exchanges": "Product returns and exchanges.",
+    "sales_and_pre_sales": "Sales inquiries and pre-sales questions.",
+    "human_resources": "Employee inquiries and HR-related issues.",
+    "service_outages_and_maintenance": "Service interruptions and maintenance.",
+    "general_inquiry": "General inquiries and information requests."
+  }
+}

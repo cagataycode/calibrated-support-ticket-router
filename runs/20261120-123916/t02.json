@@ -1,0 +1,295 @@
+{
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "company": {
+        "name": "Northwind",
+        "description": "A technology company that sells cloud software (project management, data analytics, marketing tools) and related IT services to business customers. Customers email the helpdesk, and employees use the same ticket system for internal requests."
+      },
+      "ticket": {
+        "title": "Gantt chart crashes on large projects",
+        "description": "Customer Acme reports the Gantt view freezes and shows a blank page when a project has more than 500 tasks. Started after Tuesday's release.",
+        "reporter_role": "customer success manager"
+      }
+    },
+    "questions": {
+      "main_department": {
+        "type": "choice",
+        "instructions": "Which team should own `ticket` and do most of the work on it?",
+        "criteria": {
+          "customer_support": "First-line help for customers when nothing is broken: how-to questions, how to set up or integrate a product, requests for documentation, account questions, help getting better results, and general questions about the company.",
+          "engineering": "The product team: bugs, crashes, errors, wrong results, slow performance and failing integrations in our products as a user experiences them, plus requests for new features or changes to a product.",
+          "operations": "The team that runs our servers and services: outages, service interruptions, planned maintenance, and server capacity or overload. Also problems reported by someone who operates the system (restarted servers, checked logs, tuned databases) rather than someone who only uses it.",
+          "security": "Data breaches, leaks, unauthorized access, phishing and malware, and requests to strengthen security, encryption or data protection.",
+          "billing": "Invoices, charges, payments, refunds, subscriptions, and questions about payment options or fees for something already bought.",
+          "sales": "People who want to buy something new: questions about what we offer, quotes, demos, upgrades to a bigger plan, and requests for new paid services or projects.",
+          "internal_it": "Our own employees' laptops, accounts, passwords, VPN, email and office network. Not problems in the products customers use.",
+          "hr": "Employees and job candidates: pay, expenses, leave, contracts, workplace policies, training programmes, hiring, and complaints about a colleague.",
+          "legal": "Contracts and terms, data-protection (GDPR) requests from customers, NDAs, and legal threats.",
+          "facilities": "The office building: heating, desks, cleaning, keys and access cards, meeting rooms, and deliveries."
+        }
+      },
+      "fits_a_department": {
+        "type": "noul",
+        "instructions": "Is `ticket` work that one of these teams does? customer_support: First-line help for customers when nothing is broken: how-to questions, how to set up or integrate a product, requests for documentation, account questions, help getting better results, and general questions about the company.; engineering: The product team: bugs, crashes, errors, wrong results, slow performance and failing integrations in our products as a user experiences them, plus requests for new features or changes to a product.; operations: The team that runs our servers and services: outages, service interruptions, planned maintenance, and server capacity or overload. Also problems reported by someone who operates the system (restarted servers, checked logs, tuned databases) rather than someone who only uses it.; security: Data breaches, leaks, unauthorized access, phishing and malware, and requests to strengthen security, encryption or data protection.; billing: Invoices, charges, payments, refunds, subscriptions, and questions about payment options or fees for something already bought.; sales: People who want to buy something new: questions about what we offer, quotes, demos, upgrades to a bigger plan, and requests for new paid services or projects.; internal_it: Our own employees' laptops, accounts, passwords, VPN, email and office network. Not problems in the products customers use.; hr: Employees and job candidates: pay, expenses, leave, contracts, workplace policies, training programmes, hiring, and complaints about a colleague.; legal: Contracts and terms, data-protection (GDPR) requests from customers, NDAs, and legal threats.; facilities: The office building: heating, desks, cleaning, keys and access cards, meeting rooms, and deliveries.",
+        "criteria": {
+          "true": "The ticket clearly matches the work of at least one listed team.",
+          "false": "The ticket is about something none of the listed teams handle, or is empty or unreadable."
+        }
+      },
+      "has_enough_detail": {
+        "type": "noul",
+        "instructions": "Does `ticket` say enough for the owning team to start work without asking the reporter a question first?",
+        "criteria": {
+          "true": "It says what happened or what is wanted, and where.",
+          "false": "For example: only 'it doesn't work' or 'please help', with no hint of what or where."
+        }
+      },
+      "is_confidential_personal_matter": {
+        "type": "noul",
+        "instructions": "Is `ticket` about the reporter's own pay, health, contract, or a complaint about a named colleague?",
+        "criteria": {
+          "true": "Something a person would expect only the responsible team to read.",
+          "false": "A work request that anyone in the company could see without harm."
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "How many people does the problem in `ticket` stop from working?",
+        "criteria": [
+          "Nobody is blocked; it can wait a week or more.",
+          "One person is slowed down but can keep working.",
+          "One person or one customer cannot do their work.",
+          "Many people or many customers cannot do their work."
+        ]
+      },
+      "ongoing_loss": {
+        "type": "noul",
+        "instructions": "Does `ticket` describe money or data being lost or exposed right now, so that more is lost every hour nobody acts?",
+        "criteria": {
+          "true": "For example: a secret still public online, customers being charged wrongly as it happens, records being deleted.",
+          "false": "The harm already happened once and is waiting to be fixed, such as one past charge to refund, or there is no loss."
+        }
+      },
+      "request_type": {
+        "type": "choice",
+        "instructions": "What kind of request is `ticket`?",
+        "criteria": {
+          "problem": "Something is broken, failing, slow or giving wrong results.",
+          "question": "The writer asks how something works or asks for information, and nothing is broken.",
+          "change_request": "The writer asks for a new feature, an improvement, or a change to how something is set up.",
+          "service_request": "The writer asks the company to do something for them: a quote, a refund, a document, a piece of work."
+        }
+      },
+      "requester": {
+        "type": "choice",
+        "instructions": "Who wrote `ticket`?",
+        "criteria": {
+          "customer": "Someone at a client company who uses or buys our products.",
+          "employee": "One of our own employees, writing about their own work, equipment or employment.",
+          "job_candidate": "Someone applying for or asking about a job with us."
+        }
+      },
+      "needs_customer_support": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the customer_support team?",
+        "criteria": {
+          "true": "First-line help for customers when nothing is broken: how-to questions, how to set up or integrate a product, requests for documentation, account questions, help getting better results, and general questions about the company.",
+          "false": "Nothing in the ticket is work for the customer_support team."
+        }
+      },
+      "needs_engineering": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the engineering team?",
+        "criteria": {
+          "true": "The product team: bugs, crashes, errors, wrong results, slow performance and failing integrations in our products as a user experiences them, plus requests for new features or changes to a product.",
+          "false": "Nothing in the ticket is work for the engineering team."
+        }
+      },
+      "needs_operations": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the operations team?",
+        "criteria": {
+          "true": "The team that runs our servers and services: outages, service interruptions, planned maintenance, and server capacity or overload. Also problems reported by someone who operates the system (restarted servers, checked logs, tuned databases) rather than someone who only uses it.",
+          "false": "Nothing in the ticket is work for the operations team."
+        }
+      },
+      "needs_security": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the security team?",
+        "criteria": {
+          "true": "Data breaches, leaks, unauthorized access, phishing and malware, and requests to strengthen security, encryption or data protection.",
+          "false": "Nothing in the ticket is work for the security team."
+        }
+      },
+      "needs_billing": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the billing team?",
+        "criteria": {
+          "true": "Invoices, charges, payments, refunds, subscriptions, and questions about payment options or fees for something already bought.",
+          "false": "Nothing in the ticket is work for the billing team."
+        }
+      },
+      "needs_sales": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the sales team?",
+        "criteria": {
+          "true": "People who want to buy something new: questions about what we offer, quotes, demos, upgrades to a bigger plan, and requests for new paid services or projects.",
+          "false": "Nothing in the ticket is work for the sales team."
+        }
+      },
+      "needs_internal_it": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the internal_it team?",
+        "criteria": {
+          "true": "Our own employees' laptops, accounts, passwords, VPN, email and office network. Not problems in the products customers use.",
+          "false": "Nothing in the ticket is work for the internal_it team."
+        }
+      },
+      "needs_hr": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the hr team?",
+        "criteria": {
+          "true": "Employees and job candidates: pay, expenses, leave, contracts, workplace policies, training programmes, hiring, and complaints about a colleague.",
+          "false": "Nothing in the ticket is work for the hr team."
+        }
+      },
+      "needs_legal": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the legal team?",
+        "criteria": {
+          "true": "Contracts and terms, data-protection (GDPR) requests from customers, NDAs, and legal threats.",
+          "false": "Nothing in the ticket is work for the legal team."
+        }
+      },
+      "needs_facilities": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the facilities team?",
+        "criteria": {
+          "true": "The office building: heating, desks, cleaning, keys and access cards, meeting rooms, and deliveries.",
+          "false": "Nothing in the ticket is work for the facilities team."
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.14.0",
+    "answers": {
+      "main_department": {
+        "type": "choice",
+        "choice": "engineering",
+        "confidence": 1.0,
+        "probabilities": {
+          "customer_support": 0.0,
+          "engineering": 1.0,
+          "operations": 0.0,
+          "security": 0.0,
+          "billing": 0.0,
+          "sales": 0.0,
+          "internal_it": 0.0,
+          "hr": 0.0,
+          "legal": 0.0,
+          "facilities": 0.0
+        }
+      },
+      "fits_a_department": {
+        "type": "noul",
+        "noul": 0.99
+      },
+      "has_enough_detail": {
+        "type": "noul",
+        "noul": 0.93
+      },
+      "is_confidential_personal_matter": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "urgency": {
+        "type": "score",
+        "score": 2.13,
+        "confidence": 0.86,
+        "legend": {
+          "0": "Nobody is blocked; it can wait a week or more.",
+          "1": "One person is slowed down but can keep working.",
+          "2": "One person or one customer cannot do their work.",
+          "3": "Many people or many customers cannot do their work."
+        },
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.86,
+          "3": 0.14
+        }
+      },
+      "ongoing_loss": {
+        "type": "noul",
+        "noul": 0.06
+      },
+      "request_type": {
+        "type": "choice",
+        "choice": "problem",
+        "confidence": 1.0,
+        "probabilities": {
+          "problem": 1.0,
+          "question": 0.0,
+          "change_request": 0.0,
+          "service_request": 0.0
+        }
+      },
+      "requester": {
+        "type": "choice",
+        "choice": "employee",
+        "confidence": 0.83,
+        "probabilities": {
+          "customer": 0.11,
+          "employee": 0.89,
+          "job_candidate": 0.0
+        }
+      },
+      "needs_customer_support": {
+        "type": "noul",
+        "noul": 0.52
+      },
+      "needs_engineering": {
+        "type": "noul",
+        "noul": 0.98
+      },
+      "needs_operations": {
+        "type": "noul",
+        "noul": 0.36
+      },
+      "needs_security": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "needs_billing": {
+        "type": "noul",
+        "noul": 0.02
+      },
+      "needs_sales": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "needs_internal_it": {
+        "type": "noul",
+        "noul": 0.06
+      },
+      "needs_hr": {
+        "type": "noul",
+        "noul": 0.02
+      },
+      "needs_legal": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "needs_facilities": {
+        "type": "noul",
+        "noul": 0.02
+      }
+    },
+    "usage": {
+      "input_tokens": 2605,
+      "output_tokens": 448
+    }
+  }
+}

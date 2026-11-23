@@ -1,0 +1,117 @@
+{
+  "_note": "Invented tickets for the first probe. No real people or data. 'expected' is your own judgment, written before running Jev.",
+  "tickets": [
+    {
+      "id": "t01",
+      "title": "Laptop won't connect to VPN",
+      "description": "Since this morning my laptop says 'authentication failed' when I start the VPN. I'm working from home and can't reach anything internal.",
+      "reporter_role": "employee",
+      "expected": "internal_it"
+    },
+    {
+      "id": "t02",
+      "title": "Gantt chart crashes on large projects",
+      "description": "Customer Acme reports the Gantt view freezes and shows a blank page when a project has more than 500 tasks. Started after Tuesday's release.",
+      "reporter_role": "customer success manager",
+      "expected": "engineering"
+    },
+    {
+      "id": "t03",
+      "title": "Charged twice this month",
+      "description": "Our company card was charged twice for the March subscription. Please refund one of the charges.",
+      "reporter_role": "customer",
+      "expected": "billing"
+    },
+    {
+      "id": "t04",
+      "title": "Expense reimbursement missing",
+      "description": "I submitted my train tickets for the client visit six weeks ago and still haven't been paid back.",
+      "reporter_role": "employee",
+      "expected": "hr (hard: money, but it's an employee's own expenses)"
+    },
+    {
+      "id": "t05",
+      "title": "Weird email asking for my password",
+      "description": "Got an email that looks like it's from IT asking me to 'confirm my password' on a link. I clicked it and typed my password before I noticed the domain was wrong.",
+      "reporter_role": "employee",
+      "expected": "security, copy internal_it"
+    },
+    {
+      "id": "t06",
+      "title": "Customer wants all their data deleted",
+      "description": "A customer emailed asking us to delete all personal data we hold about their users under GDPR, and wants written confirmation.",
+      "reporter_role": "support agent",
+      "expected": "legal, copy engineering"
+    },
+    {
+      "id": "t07",
+      "title": "Interested in the Enterprise plan",
+      "description": "We're 120 people and want to move from Team to Enterprise. Can someone send a quote and show us SSO?",
+      "reporter_role": "customer",
+      "expected": "sales"
+    },
+    {
+      "id": "t08",
+      "title": "Heating broken on floor 3",
+      "description": "It's 15 degrees on the third floor and the radiators are cold.",
+      "reporter_role": "employee",
+      "expected": "facilities"
+    },
+    {
+      "id": "t09",
+      "title": "Problem with my team lead",
+      "description": "My team lead keeps making comments about my age in meetings. I'd like to talk to someone about it confidentially.",
+      "reporter_role": "employee",
+      "expected": "hr, restricted, no copies"
+    },
+    {
+      "id": "t10",
+      "title": "it doesnt work",
+      "description": "please help asap",
+      "reporter_role": "customer",
+      "expected": "triage, needs-info"
+    },
+    {
+      "id": "t11",
+      "title": "Lunch recommendations?",
+      "description": "Anyone know a good place for team lunch near the office on Friday?",
+      "reporter_role": "employee",
+      "expected": "triage (no department fits)"
+    },
+    {
+      "id": "t12",
+      "title": "API key leaked in public repo",
+      "description": "One of our engineers pushed a production database key to a public GitHub repo an hour ago. The repo is still public.",
+      "reporter_role": "engineer",
+      "expected": "security, copy engineering, highest"
+    },
+    {
+      "id": "t13",
+      "title": "Invoice shows wrong VAT number",
+      "description": "Our invoice for April has our old VAT number. Our procurement can't pay it until it's corrected.",
+      "reporter_role": "customer",
+      "expected": "billing"
+    },
+    {
+      "id": "t14",
+      "title": "Add dark mode",
+      "description": "Our team works late and would love a dark theme in the web app.",
+      "reporter_role": "customer",
+      "expected": "engineering, low"
+    },
+    {
+      "id": "t15",
+      "title": "Whole app down for all customers",
+      "description": "Status page is green but every customer we talk to gets a 502 error on login. Support phone lines are full.",
+      "reporter_role": "support lead",
+      "expected": "operations, highest"
+    },
+    {
+      "id": "t16",
+      "title": "Contract renewal terms",
+      "description": "Customer's legal team wants to change the liability clause before renewing, and asks if we can also give them a 10% discount.",
+      "reporter_role": "account manager",
+      "expected": "legal, copy sales (hard: two teams)"
+    }
+  ]
+}

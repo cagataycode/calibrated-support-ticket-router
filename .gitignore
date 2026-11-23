@@ -1,0 +1,8 @@
+.env
+__pycache__/
+.venv/
+.DS_Store
+# Tickets typed into the demo page can contain anything; never commit them.
+runs/web/
+skill/ticket-router/runs/
+skill/ticket-router.zip

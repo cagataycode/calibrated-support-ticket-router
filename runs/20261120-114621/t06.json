@@ -1,0 +1,215 @@
+{
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "company": {
+        "name": "Northwind Software",
+        "description": "A 300-person company that sells a project-management web app to business customers."
+      },
+      "ticket": {
+        "title": "Customer wants all their data deleted",
+        "description": "A customer emailed asking us to delete all personal data we hold about their users under GDPR, and wants written confirmation.",
+        "reporter_role": "support agent"
+      }
+    },
+    "questions": {
+      "main_department": {
+        "type": "choice",
+        "instructions": "Which team should own `ticket` and do most of the work on it?",
+        "criteria": {
+          "it_support": "Internal IT: employee laptops, accounts, passwords, VPN, email, software licences for staff. Not bugs in the product customers use.",
+          "engineering": "The product team: bugs, errors, outages and performance problems in the web app that customers use, and requests for new product features.",
+          "security": "Suspected phishing, leaked passwords or keys, unauthorised access, malware, and vulnerability reports.",
+          "finance": "Invoices, payments, refunds, pricing and plan changes for customers, and supplier invoices. Not an employee's own salary or expenses.",
+          "hr": "Anything about an employee's own job: salary, payslips, expenses reimbursement, leave, contracts, hiring, complaints about a colleague.",
+          "legal": "Contracts with customers or suppliers, data-protection (GDPR) requests from customers, NDAs, legal threats.",
+          "sales": "New customers asking to buy, demos, quotes, and existing customers asking to upgrade to a bigger plan.",
+          "facilities": "The office building: desks, heating, cleaning, keys and access cards, meeting rooms, deliveries."
+        }
+      },
+      "fits_a_department": {
+        "type": "noul",
+        "instructions": "Is `ticket` work that one of these teams does? it_support: Internal IT: employee laptops, accounts, passwords, VPN, email, software licences for staff. Not bugs in the product customers use.; engineering: The product team: bugs, errors, outages and performance problems in the web app that customers use, and requests for new product features.; security: Suspected phishing, leaked passwords or keys, unauthorised access, malware, and vulnerability reports.; finance: Invoices, payments, refunds, pricing and plan changes for customers, and supplier invoices. Not an employee's own salary or expenses.; hr: Anything about an employee's own job: salary, payslips, expenses reimbursement, leave, contracts, hiring, complaints about a colleague.; legal: Contracts with customers or suppliers, data-protection (GDPR) requests from customers, NDAs, legal threats.; sales: New customers asking to buy, demos, quotes, and existing customers asking to upgrade to a bigger plan.; facilities: The office building: desks, heating, cleaning, keys and access cards, meeting rooms, deliveries.",
+        "criteria": {
+          "true": "The ticket clearly matches the work of at least one listed team.",
+          "false": "The ticket is about something none of the listed teams handle, or is empty or unreadable."
+        }
+      },
+      "has_enough_detail": {
+        "type": "noul",
+        "instructions": "Does `ticket` say enough for the owning team to start work without asking the reporter a question first?",
+        "criteria": {
+          "true": "It says what happened or what is wanted, and where.",
+          "false": "For example: only 'it doesn't work' or 'please help', with no hint of what or where."
+        }
+      },
+      "is_confidential_personal_matter": {
+        "type": "noul",
+        "instructions": "Is `ticket` about the reporter's own pay, health, contract, or a complaint about a named colleague?",
+        "criteria": {
+          "true": "Something a person would expect only the responsible team to read.",
+          "false": "A work request that anyone in the company could see without harm."
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "instructions": "How urgent is `ticket`?",
+        "criteria": [
+          "Nothing is blocked; it can wait a week or more.",
+          "One person is slowed down but can keep working.",
+          "One person or one customer cannot do their work.",
+          "Many people or customers cannot work, money or data is being lost, or there is a security breach."
+        ]
+      },
+      "needs_it_support": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the it_support team?",
+        "criteria": {
+          "true": "Internal IT: employee laptops, accounts, passwords, VPN, email, software licences for staff. Not bugs in the product customers use.",
+          "false": "Nothing in the ticket is work for the it_support team."
+        }
+      },
+      "needs_engineering": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the engineering team?",
+        "criteria": {
+          "true": "The product team: bugs, errors, outages and performance problems in the web app that customers use, and requests for new product features.",
+          "false": "Nothing in the ticket is work for the engineering team."
+        }
+      },
+      "needs_security": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the security team?",
+        "criteria": {
+          "true": "Suspected phishing, leaked passwords or keys, unauthorised access, malware, and vulnerability reports.",
+          "false": "Nothing in the ticket is work for the security team."
+        }
+      },
+      "needs_finance": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the finance team?",
+        "criteria": {
+          "true": "Invoices, payments, refunds, pricing and plan changes for customers, and supplier invoices. Not an employee's own salary or expenses.",
+          "false": "Nothing in the ticket is work for the finance team."
+        }
+      },
+      "needs_hr": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the hr team?",
+        "criteria": {
+          "true": "Anything about an employee's own job: salary, payslips, expenses reimbursement, leave, contracts, hiring, complaints about a colleague.",
+          "false": "Nothing in the ticket is work for the hr team."
+        }
+      },
+      "needs_legal": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the legal team?",
+        "criteria": {
+          "true": "Contracts with customers or suppliers, data-protection (GDPR) requests from customers, NDAs, legal threats.",
+          "false": "Nothing in the ticket is work for the legal team."
+        }
+      },
+      "needs_sales": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the sales team?",
+        "criteria": {
+          "true": "New customers asking to buy, demos, quotes, and existing customers asking to upgrade to a bigger plan.",
+          "false": "Nothing in the ticket is work for the sales team."
+        }
+      },
+      "needs_facilities": {
+        "type": "noul",
+        "instructions": "Does `ticket` need some work from the facilities team?",
+        "criteria": {
+          "true": "The office building: desks, heating, cleaning, keys and access cards, meeting rooms, deliveries.",
+          "false": "Nothing in the ticket is work for the facilities team."
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.14.0",
+    "answers": {
+      "main_department": {
+        "type": "choice",
+        "choice": "legal",
+        "confidence": 0.99,
+        "probabilities": {
+          "it_support": 0.0,
+          "engineering": 0.01,
+          "security": 0.0,
+          "finance": 0.0,
+          "hr": 0.0,
+          "legal": 0.99,
+          "sales": 0.0,
+          "facilities": 0.0
+        }
+      },
+      "fits_a_department": {
+        "type": "noul",
+        "noul": 0.98
+      },
+      "has_enough_detail": {
+        "type": "noul",
+        "noul": 0.73
+      },
+      "is_confidential_personal_matter": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "urgency": {
+        "type": "score",
+        "score": 1.78,
+        "confidence": 0.4,
+        "legend": {
+          "0": "Nothing is blocked; it can wait a week or more.",
+          "1": "One person is slowed down but can keep working.",
+          "2": "One person or one customer cannot do their work.",
+          "3": "Many people or customers cannot work, money or data is being lost, or there is a security breach."
+        },
+        "probabilities": {
+          "0": 0.16,
+          "1": 0.09,
+          "2": 0.56,
+          "3": 0.19
+        }
+      },
+      "needs_it_support": {
+        "type": "noul",
+        "noul": 0.09
+      },
+      "needs_engineering": {
+        "type": "noul",
+        "noul": 0.59
+      },
+      "needs_security": {
+        "type": "noul",
+        "noul": 0.12
+      },
+      "needs_finance": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "needs_hr": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "needs_legal": {
+        "type": "noul",
+        "noul": 0.95
+      },
+      "needs_sales": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "needs_facilities": {
+        "type": "noul",
+        "noul": 0.02
+      }
+    },
+    "usage": {
+      "input_tokens": 1777,
+      "output_tokens": 297
+    }
+  }
+}

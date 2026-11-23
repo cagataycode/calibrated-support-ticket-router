@@ -1,0 +1,19 @@
+{
+  "_note": "Real-world teams, used by the demo, the benchmark and the labelling page. Each description is sent to Jev as criteria, so it says what the team owns and names the case most often confused with a neighbouring team. Request type and who is writing are asked as separate questions (questions.py), not folded into the team list.",
+  "company": {
+    "name": "Northwind",
+    "description": "A technology company that sells cloud software (project management, data analytics, marketing tools) and related IT services to business customers. Customers email the helpdesk, and employees use the same ticket system for internal requests."
+  },
+  "departments": {
+    "customer_support": "First-line help for customers when nothing is broken: how-to questions, how to set up or integrate a product, requests for documentation, account questions, help getting better results, and general questions about the company.",
+    "engineering": "The product team: bugs, crashes, errors, wrong results, slow performance and failing integrations in our products as a user experiences them, plus requests for new features or changes to a product.",
+    "operations": "The team that runs our servers and services: outages, service interruptions, planned maintenance, and server capacity or overload. Also problems reported by someone who operates the system (restarted servers, checked logs, tuned databases) rather than someone who only uses it.",
+    "security": "Data breaches, leaks, unauthorized access, phishing and malware, and requests to strengthen security, encryption or data protection.",
+    "billing": "Invoices, charges, payments, refunds, subscriptions, and questions about payment options or fees for something already bought.",
+    "sales": "People who want to buy something new: questions about what we offer, quotes, demos, upgrades to a bigger plan, and requests for new paid services or projects.",
+    "internal_it": "Our own employees' laptops, accounts, passwords, VPN, email and office network. Not problems in the products customers use.",
+    "hr": "Employees and job candidates: pay, expenses, leave, contracts, workplace policies, training programmes, hiring, and complaints about a colleague.",
+    "legal": "Contracts and terms, data-protection (GDPR) requests from customers, NDAs, and legal threats.",
+    "facilities": "The office building: heating, desks, cleaning, keys and access cards, meeting rooms, and deliveries."
+  }
+}

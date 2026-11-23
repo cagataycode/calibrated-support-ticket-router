@@ -1,0 +1,402 @@
+{
+ "human_resources-508": {
+  "label": "customer_support",
+  "reason": "Campaign results dropped, nothing reported broken: help getting better results"
+ },
+ "customer_service-1034": {
+  "label": "sales",
+  "reason": "Asks what analytics products we offer, before buying"
+ },
+ "billing_and_payments-2737": {
+  "label": "customer_support",
+  "reason": "How-to question about securing data with products"
+ },
+ "product_support-3694": {
+  "label": "customer_support",
+  "reason": "How-to question about a specific product"
+ },
+ "it_support-1398": {
+  "label": "engineering",
+  "reason": "Tools not working after an update"
+ },
+ "it_support-1385": {
+  "label": "sales",
+  "reason": "Asks for new strategy work: a new paid service"
+ },
+ "billing_and_payments-2723": {
+  "label": "billing",
+  "reason": "Subscriptions billed incorrectly"
+ },
+ "customer_service-1029": {
+  "label": "customer_support",
+  "reason": "How to integrate a product; nothing broken"
+ },
+ "technical_support-1504": {
+  "label": "security",
+  "reason": "Asks to strengthen security for medical data"
+ },
+ "sales_and_pre_sales-229": {
+  "label": "unclear",
+  "reason": "Only says 'the platform failed': too little to route"
+ },
+ "technical_support-1509": {
+  "label": "engineering",
+  "reason": "Asks for product improvements"
+ },
+ "technical_support-1511": {
+  "label": "security",
+  "reason": "Unauthorized access to records"
+ },
+ "product_support-3704": {
+  "label": "engineering",
+  "reason": "Software keeps crashing"
+ },
+ "general_inquiry-334": {
+  "label": "engineering",
+  "reason": "Platform halts from memory problems"
+ },
+ "it_support-1392": {
+  "label": "operations",
+  "reason": "System outage"
+ },
+ "returns_and_exchanges-513": {
+  "label": "security",
+  "reason": "Unauthorized access from weak settings"
+ },
+ "human_resources-498": {
+  "label": "security",
+  "reason": "Data leaked through an unsecured channel"
+ },
+ "billing_and_payments-2724": {
+  "label": "security",
+  "reason": "Data breach"
+ },
+ "general_inquiry-348": {
+  "label": "engineering",
+  "reason": "Wrong analytics results"
+ },
+ "sales_and_pre_sales-230": {
+  "label": "security",
+  "reason": "Asks to strengthen data security"
+ },
+ "service_outages_and_maintenance-1015": {
+  "label": "operations",
+  "reason": "Unexpected service outage"
+ },
+ "human_resources-501": {
+  "label": "customer_support",
+  "reason": "Asks what an integration can do"
+ },
+ "billing_and_payments-2722": {
+  "label": "billing",
+  "reason": "Billing structure, payment options and fees"
+ },
+ "customer_service-1031": {
+  "label": "engineering",
+  "reason": "Slow performance for users"
+ },
+ "general_inquiry-347": {
+  "label": "engineering",
+  "reason": "Proposes new features for a tool"
+ },
+ "it_support-1384": {
+  "label": "engineering",
+  "reason": "Integration causing sync failures"
+ },
+ "customer_service-1016": {
+  "label": "security",
+  "reason": "Asks to strengthen security protocols"
+ },
+ "it_support-1399": {
+  "label": "customer_support",
+  "reason": "How to integrate two products"
+ },
+ "human_resources-500": {
+  "label": "hr",
+  "reason": "Employee training programmes"
+ },
+ "general_inquiry-349": {
+  "label": "customer_support",
+  "reason": "Campaign results dropped, nothing reported broken: help getting better results"
+ },
+ "product_support-3698": {
+  "label": "engineering",
+  "reason": "Device sync problem"
+ },
+ "it_support-1380": {
+  "label": "operations",
+  "reason": "Writer tuned databases and caching: an operator reporting server load"
+ },
+ "product_support-3697": {
+  "label": "customer_support",
+  "reason": "How to integrate a product"
+ },
+ "customer_service-1030": {
+  "label": "customer_support",
+  "reason": "Asks for integration documentation"
+ },
+ "human_resources-515": {
+  "label": "hr",
+  "reason": "Job candidate asking about work policies"
+ },
+ "product_support-3705": {
+  "label": "engineering",
+  "reason": "Metrics not updating, API connection problem"
+ },
+ "product_support-3691": {
+  "label": "security",
+  "reason": "Data leak"
+ },
+ "human_resources-503": {
+  "label": "engineering",
+  "reason": "Tools acting up"
+ },
+ "billing_and_payments-2728": {
+  "label": "billing",
+  "reason": "Recurring payment failures"
+ },
+ "general_inquiry-335": {
+  "label": "customer_support",
+  "reason": "How to integrate a product"
+ },
+ "technical_support-1502": {
+  "label": "customer_support",
+  "reason": "Campaign results unchanged, nothing reported broken: help getting better results"
+ },
+ "billing_and_payments-2733": {
+  "label": "unclear",
+  "reason": "Integration cost details: could be billing, sales or support"
+ },
+ "service_outages_and_maintenance-1027": {
+  "label": "operations",
+  "reason": "Service interruptions across tools"
+ },
+ "it_support-1394": {
+  "label": "security",
+  "reason": "Asks to put security protocols in place"
+ },
+ "customer_service-1025": {
+  "label": "operations",
+  "reason": "Delays from traffic overload: capacity"
+ },
+ "service_outages_and_maintenance-1031": {
+  "label": "engineering",
+  "reason": "Crash after a software update"
+ },
+ "technical_support-1510": {
+  "label": "engineering",
+  "reason": "Connectivity and integration failures"
+ },
+ "sales_and_pre_sales-225": {
+  "label": "security",
+  "reason": "Asks for stronger security for medical data"
+ },
+ "technical_support-1503": {
+  "label": "engineering",
+  "reason": "Sync failures after an API update"
+ },
+ "customer_service-1019": {
+  "label": "engineering",
+  "reason": "Integration sync issue"
+ },
+ "general_inquiry-343": {
+  "label": "customer_support",
+  "reason": "How to integrate a product"
+ },
+ "returns_and_exchanges-514": {
+  "label": "customer_support",
+  "reason": "How to integrate a router with the software"
+ },
+ "product_support-3700": {
+  "label": "engineering",
+  "reason": "Dashboard sync failure"
+ },
+ "service_outages_and_maintenance-1016": {
+  "label": "engineering",
+  "reason": "Tool fails to load data"
+ },
+ "returns_and_exchanges-512": {
+  "label": "engineering",
+  "reason": "Asks for a compatibility update"
+ },
+ "sales_and_pre_sales-212": {
+  "label": "customer_support",
+  "reason": "General question about marketing strategies"
+ },
+ "service_outages_and_maintenance-1019": {
+  "label": "operations",
+  "reason": "Asks about planned maintenance"
+ },
+ "service_outages_and_maintenance-1018": {
+  "label": "operations",
+  "reason": "Writer restarted servers and checked logs: an operator reporting overload"
+ },
+ "sales_and_pre_sales-227": {
+  "label": "engineering",
+  "reason": "Tool fails to process data"
+ },
+ "technical_support-1508": {
+  "label": "engineering",
+  "reason": "Sporadic sync failures"
+ },
+ "technical_support-1497": {
+  "label": "engineering",
+  "reason": "Asks for a performance update"
+ },
+ "human_resources-499": {
+  "label": "hr",
+  "reason": "Job candidate asking about work policies"
+ },
+ "billing_and_payments-2725": {
+  "label": "billing",
+  "reason": "Invoice error"
+ },
+ "customer_service-1017": {
+  "label": "security",
+  "reason": "Asks to strengthen data security"
+ },
+ "returns_and_exchanges-502": {
+  "label": "operations",
+  "reason": "Writer restarted services and monitored logs: an operator reporting overload"
+ },
+ "billing_and_payments-2734": {
+  "label": "billing",
+  "reason": "Invoicing errors"
+ },
+ "human_resources-516": {
+  "label": "engineering",
+  "reason": "Asks to change integration settings"
+ },
+ "it_support-1391": {
+  "label": "unclear",
+  "reason": "Too vague to tell what is wanted"
+ },
+ "service_outages_and_maintenance-1023": {
+  "label": "operations",
+  "reason": "Writer restarted servers and checked firewalls: data feed interruption"
+ },
+ "product_support-3688": {
+  "label": "engineering",
+  "reason": "Report data discrepancies"
+ },
+ "technical_support-1506": {
+  "label": "engineering",
+  "reason": "Tools crashing"
+ },
+ "sales_and_pre_sales-224": {
+  "label": "sales",
+  "reason": "Asks what security services we offer, before buying"
+ },
+ "returns_and_exchanges-515": {
+  "label": "engineering",
+  "reason": "Calculation errors"
+ },
+ "billing_and_payments-2719": {
+  "label": "customer_support",
+  "reason": "General question about how we market products"
+ },
+ "returns_and_exchanges-506": {
+  "label": "engineering",
+  "reason": "Inconsistent forecasts"
+ },
+ "general_inquiry-340": {
+  "label": "engineering",
+  "reason": "Devices not working"
+ },
+ "service_outages_and_maintenance-1020": {
+  "label": "operations",
+  "reason": "Unexpected service outage"
+ },
+ "returns_and_exchanges-501": {
+  "label": "engineering",
+  "reason": "Integration errors"
+ },
+ "customer_service-1033": {
+  "label": "customer_support",
+  "reason": "How to integrate two products"
+ },
+ "general_inquiry-337": {
+  "label": "customer_support",
+  "reason": "Asks for help improving their use of tools"
+ },
+ "it_support-1389": {
+  "label": "security",
+  "reason": "Unauthorized access attempts"
+ },
+ "product_support-3687": {
+  "label": "engineering",
+  "reason": "Report broken after an update"
+ },
+ "general_inquiry-331": {
+  "label": "engineering",
+  "reason": "Wrong analytics results"
+ },
+ "human_resources-504": {
+  "label": "engineering",
+  "reason": "Task sync failures"
+ },
+ "returns_and_exchanges-518": {
+  "label": "engineering",
+  "reason": "Model gives inconsistent results"
+ },
+ "sales_and_pre_sales-220": {
+  "label": "unclear",
+  "reason": "Vague wish to use analytics for sales strategy"
+ },
+ "sales_and_pre_sales-221": {
+  "label": "engineering",
+  "reason": "Integration error"
+ },
+ "returns_and_exchanges-509": {
+  "label": "unclear",
+  "reason": "Reads like a sales pitch, not a request"
+ },
+ "general_inquiry-346": {
+  "label": "engineering",
+  "reason": "Asks for new collaboration features"
+ },
+ "service_outages_and_maintenance-1025": {
+  "label": "security",
+  "reason": "Urgent request for stronger encryption"
+ },
+ "product_support-3702": {
+  "label": "engineering",
+  "reason": "Timelines not syncing"
+ },
+ "billing_and_payments-2729": {
+  "label": "billing",
+  "reason": "Payment options, discounts and fees"
+ },
+ "it_support-1393": {
+  "label": "sales",
+  "reason": "Asks about analytics tools to adopt, before buying"
+ },
+ "sales_and_pre_sales-228": {
+  "label": "engineering",
+  "reason": "Integration conflict breaks visualisation"
+ },
+ "sales_and_pre_sales-219": {
+  "label": "customer_support",
+  "reason": "General question about growth strategies"
+ },
+ "returns_and_exchanges-508": {
+  "label": "unclear",
+  "reason": "Vague request for help optimising investments"
+ },
+ "human_resources-506": {
+  "label": "engineering",
+  "reason": "Data loss from sync failures"
+ },
+ "service_outages_and_maintenance-1026": {
+  "label": "engineering",
+  "reason": "System crash"
+ },
+ "customer_service-1027": {
+  "label": "customer_support",
+  "reason": "Asks what security measures exist"
+ },
+ "technical_support-1513": {
+  "label": "engineering",
+  "reason": "Processing delays"
+ }
+}

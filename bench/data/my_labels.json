@@ -1,0 +1,502 @@
+{
+ "human_resources-508": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1034": {
+  "label": "sales",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2737": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3694": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1398": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1385": {
+  "label": "sales",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2723": {
+  "label": "billing",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1029": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "technical_support-1504": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "technical_support-1509": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "technical_support-1511": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3704": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-334": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1392": {
+  "label": "operations",
+  "note": "",
+  "source": "accepted"
+ },
+ "returns_and_exchanges-513": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "human_resources-498": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2724": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-348": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "sales_and_pre_sales-230": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "service_outages_and_maintenance-1015": {
+  "label": "operations",
+  "note": "",
+  "source": "accepted"
+ },
+ "human_resources-501": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2722": {
+  "label": "billing",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1031": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-347": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1384": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1016": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1399": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "human_resources-500": {
+  "label": "hr",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-349": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3698": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1380": {
+  "label": "operations",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3697": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1030": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "human_resources-515": {
+  "label": "hr",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3705": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3691": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "human_resources-503": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2728": {
+  "label": "billing",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-335": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "technical_support-1502": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2733": {
+  "label": "billing",
+  "note": "",
+  "source": "changed"
+ },
+ "service_outages_and_maintenance-1027": {
+  "label": "operations",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1394": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1025": {
+  "label": "operations",
+  "note": "",
+  "source": "accepted"
+ },
+ "service_outages_and_maintenance-1031": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "technical_support-1510": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "sales_and_pre_sales-225": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "technical_support-1503": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1019": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-343": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "returns_and_exchanges-514": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3700": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "service_outages_and_maintenance-1016": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "returns_and_exchanges-512": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "sales_and_pre_sales-212": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "service_outages_and_maintenance-1019": {
+  "label": "operations",
+  "note": "",
+  "source": "accepted"
+ },
+ "service_outages_and_maintenance-1018": {
+  "label": "operations",
+  "note": "",
+  "source": "accepted"
+ },
+ "sales_and_pre_sales-227": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "technical_support-1508": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "technical_support-1497": {
+  "label": "internal_it",
+  "note": "",
+  "source": "changed"
+ },
+ "human_resources-499": {
+  "label": "hr",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2725": {
+  "label": "billing",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1017": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "returns_and_exchanges-502": {
+  "label": "operations",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2734": {
+  "label": "billing",
+  "note": "",
+  "source": "accepted"
+ },
+ "human_resources-516": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1391": {
+  "label": "unclear",
+  "note": "",
+  "source": "accepted"
+ },
+ "service_outages_and_maintenance-1023": {
+  "label": "operations",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3688": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "technical_support-1506": {
+  "label": "internal_it",
+  "note": "",
+  "source": "changed"
+ },
+ "sales_and_pre_sales-224": {
+  "label": "sales",
+  "note": "",
+  "source": "accepted"
+ },
+ "returns_and_exchanges-515": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2719": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "returns_and_exchanges-506": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-340": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "service_outages_and_maintenance-1020": {
+  "label": "operations",
+  "note": "",
+  "source": "accepted"
+ },
+ "returns_and_exchanges-501": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1033": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-337": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1389": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3687": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-331": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "human_resources-504": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "returns_and_exchanges-518": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "sales_and_pre_sales-220": {
+  "label": "sales",
+  "note": "",
+  "source": "changed"
+ },
+ "sales_and_pre_sales-221": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "returns_and_exchanges-509": {
+  "label": "unclear",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-346": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "service_outages_and_maintenance-1025": {
+  "label": "security",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3702": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2729": {
+  "label": "billing",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1393": {
+  "label": "sales",
+  "note": "",
+  "source": "accepted"
+ },
+ "sales_and_pre_sales-228": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "sales_and_pre_sales-219": {
+  "label": "customer_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "returns_and_exchanges-508": {
+  "label": "unclear",
+  "note": "",
+  "source": "accepted"
+ },
+ "human_resources-506": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "service_outages_and_maintenance-1026": {
+  "label": "operations",
+  "note": "",
+  "source": "changed"
+ },
+ "customer_service-1027": {
+  "label": "security",
+  "note": "",
+  "source": "changed"
+ },
+ "technical_support-1513": {
+  "label": "engineering",
+  "note": "",
+  "source": "accepted"
+ },
+ "sales_and_pre_sales-229": {
+  "label": "unclear",
+  "note": "",
+  "source": "accepted"
+ }
+}

@@ -1,0 +1,155 @@
+{
+ "human_resources-508": {
+  "label": "sales_and_pre_sales",
+  "note": ""
+ },
+ "customer_service-1034": {
+  "label": "customer_service",
+  "note": ""
+ },
+ "billing_and_payments-2737": {
+  "label": "product_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3694": {
+  "label": "product_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1398": {
+  "label": "technical_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1385": {
+  "label": "unclear",
+  "note": "",
+  "source": "changed"
+ },
+ "billing_and_payments-2723": {
+  "label": "billing_and_payments",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1029": {
+  "label": "product_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "technical_support-1504": {
+  "label": "it_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "sales_and_pre_sales-229": {
+  "label": "unclear",
+  "note": "",
+  "source": "changed"
+ },
+ "technical_support-1509": {
+  "label": "product_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "technical_support-1511": {
+  "label": "it_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3704": {
+  "label": "technical_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-334": {
+  "label": "technical_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1392": {
+  "label": "service_outages_and_maintenance",
+  "note": "",
+  "source": "accepted"
+ },
+ "returns_and_exchanges-513": {
+  "label": "it_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "human_resources-498": {
+  "label": "it_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2724": {
+  "label": "it_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-348": {
+  "label": "technical_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "sales_and_pre_sales-230": {
+  "label": "it_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "service_outages_and_maintenance-1015": {
+  "label": "service_outages_and_maintenance",
+  "note": "",
+  "source": "accepted"
+ },
+ "human_resources-501": {
+  "label": "product_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "billing_and_payments-2722": {
+  "label": "billing_and_payments",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1031": {
+  "label": "technical_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-347": {
+  "label": "product_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1384": {
+  "label": "technical_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "customer_service-1016": {
+  "label": "it_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "it_support-1399": {
+  "label": "product_support",
+  "note": "",
+  "source": "accepted"
+ },
+ "human_resources-500": {
+  "label": "human_resources",
+  "note": "",
+  "source": "accepted"
+ },
+ "general_inquiry-349": {
+  "label": "unclear",
+  "note": "",
+  "source": "accepted"
+ },
+ "product_support-3698": {
+  "label": "technical_support",
+  "note": "",
+  "source": "accepted"
+ }
+}
